@@ -23,3 +23,25 @@ Because the moov atom—and any final cleanup of fragmented metadata—is only w
 In all these cases, the AVAssetWriter never gets to consolidate fragments into the moov atom, and you’ll see “moov atom not found” errors.  ￼ ￼# the-fruit-investigations
  
 ![alt text](image.png)
+
+-------
+
+
+Yes – when you record with QuickTime Player (or any AVFoundation-based recorder), the app immediately writes your incoming video/audio into a hidden “autosave” file (and into the system temporary directory) before you ever choose where to save. Only when you hit Save… (which calls finishWriting internally) does QuickTime package that data into a normal .mov at your chosen path.
+	•	Autosave Package
+QuickTime Player uses macOS’s AutoSave infrastructure to keep your recording safe. As soon as you start, it creates a package at:
+
+~/Library/Containers/com.apple.QuickTimePlayerX/
+  Data/Library/Autosave Information/
+    Unsaved QuickTime Player Document.qtxcomposition
+
+You can right‑click that .qtxcomposition file, choose Show Package Contents, and inside you’ll find the actual .mov fragments.  ￼
+
+	•	Temporary Items
+Simultaneously, data is also buffered into your per‑session temp folder. In Terminal, run:
+
+open "$TMPDIR"
+
+Then look under TemporaryItems (often in a subfolder named com.apple.QuickTimePlayerX) for .mov chunks. These persist until the system purges old temp files.  ￼
+
+If the app or system crashes, or you cancel/force‑quit before the Save dialog completes, those hidden files remain (until macOS cleans them up), and you can recover your recording by retrieving and renaming the .mov inside the autosave package or temp folder.
