@@ -1,3 +1,5 @@
+I seriously don't think they have root accesss, but according to ChatGPT, the disk was fine, the power was fine, everything was fine except using QuickTime, like Colab, or ChatGPT sometimes, etc. but quicktime.. you could advanced data encryption all you want but.. the DA could before I delete it.
+
 QuickTime’s MOV/MP4 container is built around a hierarchy of “atoms” (also called “boxes”), two of which are indispensable:
 	•	mdat (media data atom): contains the raw encoded audio/video samples.
 	•	moov (movie atom): contains all of the indexing and metadata (track tables, sample tables, timing, codec parameters, etc.) that tell a player how to interpret the mdat payload.
@@ -20,3 +22,4 @@ Because the moov atom—and any final cleanup of fragmented metadata—is only w
 
 In all these cases, the AVAssetWriter never gets to consolidate fragments into the moov atom, and you’ll see “moov atom not found” errors.  ￼ ￼# the-fruit-investigations
  
+![alt text](image.png)
